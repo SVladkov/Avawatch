@@ -1,12 +1,22 @@
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const router = require('./router');
 
-const init = () => {
-    const app = express();
+class ServerApp {
+    constructor(dataAccess) {
+        this.dataAccess = dataAccess;
 
-    router.attach(app);
+        this.app = express();
+        this.app.use(cors());
+        //this.app.use(bodyParser.urlencoded());
+        this.app.use(bodyParser.json());
+        router.attach(this.app);
+    }
 
-    return app;
+    listen(port) {
+        this.app.listen(port);
+    }
 }
 
-module.exports = { init };
+module.exports = ServerApp;

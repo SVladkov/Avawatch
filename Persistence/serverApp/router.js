@@ -1,6 +1,12 @@
 const attach = (app) => {
-    app.use('/', (req, res) => {
-        res.send('Hello')
+    app.get('/forecast', (req, res) => {
+        console.log(req)
+        res.send('This is the forecast');
+    });
+
+    app.post('/forecast', (req, res) => {
+        console.log('request');
+        console.log(req.body)
     })
 }
 
