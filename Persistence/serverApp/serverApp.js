@@ -11,7 +11,7 @@ class ServerApp {
         this.app.use(cors());
         //this.app.use(bodyParser.urlencoded());
         this.app.use(bodyParser.json());
-        router.attach(this.app);
+        router.attach(this);
     }
 
     listen(port) {

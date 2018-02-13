@@ -4,6 +4,7 @@ class dataAccess {
 
         this.createAllTables();
         this.insertSourceTypes();
+        //this.insertDataSources();
     }
 
     createAllTables() {
@@ -38,8 +39,10 @@ class dataAccess {
                 "date DATETIME, " +
                 "forecast VARCHAR(255), " +
                 "regionId INT NOT NULL, " +
+                "dataSourceId INT NOT NULL, " +
                 "PRIMARY KEY (id), " +
-                "FOREIGN KEY (regionId) REFERENCES regions(id)" +
+                "FOREIGN KEY (regionId) REFERENCES regions(id), " +
+                "FOREIGN KEY (dataSourceId) REFERENCES dataSources(id)" +
             ")";
 
             this.createTable(createRegionsTable);
@@ -72,6 +75,38 @@ class dataAccess {
                 }
             }
         })
+    }
+
+    insertDataSources() {
+        var insertForecast = "INSERT INTO dataSources (name, sourceTypeId) VALUES (" +
+            "'PSS', " +
+            "2" +
+        ")";
+
+        this.db.connection.query(insertForecast, (err, result) => {
+            if (err) {
+                throw err;
+            }
+        })
+    }
+
+    insertForecast(forecast) {
+        var insertForecast = "INSERT INTO forecasts (date, forecast, regionId, dataSourceId) VALUES (" +
+            "'" + forecast.date + "', " +
+            "'" + forecast.forecast + "', " +
+            forecast.regionId + ", " +
+            forecast.dataSourceId +
+        ")";
+
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(insertForecast, (err, result) => {
+                if (err) {
+                    throw err;
+                } else {
+                    resolve(result.insertId);
+                }
+            });
+        });
     }
 }
 
