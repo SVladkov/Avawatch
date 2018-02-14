@@ -5,8 +5,6 @@ const attach = (serverApp) => {
     });
 
     serverApp.app.post('/forecast', (req, res) => {
-        console.log('request');
-        console.log(req.body)
         serverApp.dataAccess.insertForecast(req.body)
             .then((id) => {
                 res.send({id: id});

@@ -90,9 +90,15 @@ class dataAccess {
         })
     }
 
+    formatDate(date) {
+        return date.year + "-" + date.month + "-" + date.day;
+    }
+
     insertForecast(forecast) {
+        console.log(forecast)
+
         var insertForecast = "INSERT INTO forecasts (date, forecast, regionId, dataSourceId) VALUES (" +
-            "'" + forecast.date + "', " +
+            "'" + this.formatDate(forecast.date) + "', " +
             "'" + forecast.forecast + "', " +
             forecast.regionId + ", " +
             forecast.dataSourceId +
