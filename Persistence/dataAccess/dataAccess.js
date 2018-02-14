@@ -114,6 +114,20 @@ class dataAccess {
             });
         });
     }
+
+    getAllForecasts() {
+        var getAllForecasts = "SELECT * FROM forecasts";
+
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(getAllForecasts, (err, result) => {
+                if (err) {
+                    throw err;
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
 }
 
 module.exports = dataAccess;

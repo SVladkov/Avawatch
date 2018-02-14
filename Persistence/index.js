@@ -6,4 +6,4 @@ const configurations = require('./configurations');
 var db = new Db(configurations.databaseConnection);
 var dataAccess = new DataAccess(db);
 var serverApp = new ServerApp(dataAccess);
-serverApp.listen(3000);
+serverApp.listen(3001);

@@ -11,13 +11,14 @@ class PssPoster {
     postForecast(forecast) {
         forecast.dataSourceId = 2;
 
-        fetch('http://localhost:3000/forecast', {
+        fetch('http://localhost:3001/forecasts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(forecast)
         }).then(res => {
+            console.log(res)
             res.json().then(id => {
                 console.log(id);
             });

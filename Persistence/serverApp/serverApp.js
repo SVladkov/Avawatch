@@ -9,7 +9,6 @@ class ServerApp {
 
         this.app = express();
         this.app.use(cors());
-        //this.app.use(bodyParser.urlencoded());
         this.app.use(bodyParser.json());
         router.attach(this);
     }
