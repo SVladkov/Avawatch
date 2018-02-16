@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import './AvalancheMap.css'
+import { Map, TileLayer, Marker, Popup, Polygon } from 'react-leaflet';
+import './AvalancheMap.css';
+import coordinates from '../coordinates/coordinates.js';
 
 class AvalancheMap extends Component {
     constructor() {
@@ -8,7 +9,7 @@ class AvalancheMap extends Component {
         this.state = {
             lat: 42.5,
             lng: 23.5,
-            zoom: 5
+            zoom: 9
         }
     }
 
@@ -28,6 +29,7 @@ class AvalancheMap extends Component {
                         </span>
                     </Popup>
                 </Marker>
+                <Polygon color="purple" positions={coordinates} />
             </Map>
         )
     }
