@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 class ForecastsService {
     constructor() {
-        this.url = 'http://localhost:3001/forecasts';
+        this.url = 'http://localhost:3002/forecasts';
     }
 
     getForecasts() {

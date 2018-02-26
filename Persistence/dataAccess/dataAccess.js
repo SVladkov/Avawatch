@@ -116,7 +116,7 @@ class dataAccess {
     }
 
     getAllForecasts() {
-        var getAllForecasts = "SELECT * FROM forecasts";
+        var getAllForecasts = "SELECT date, forecast, regionId, dataSourceId FROM forecasts";
 
         return new Promise((resolve, reject) => {
             this.db.connection.query(getAllForecasts, (err, result) => {

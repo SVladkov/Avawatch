@@ -6,12 +6,6 @@ import AvalancheMap from './AvalancheMap';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.forecastService = new ForecastsService();
-
-        this.forecastService.getForecasts()
-            .then(forecasts => {
-                console.log(forecasts);
-            });
     }
 
     render() {
