@@ -27,6 +27,18 @@ class AvalancheMap extends Component {
         this.getForecasts();
     }
 
+    getDangerColor(dangerCode) {
+        const codeToColor = {
+            '1': 'green',
+            '2': 'yellow',
+            '3': 'orange',
+            '4': 'red',
+            '5': 'black'
+        }
+
+        return codeToColor[dangerCode];
+    }
+
     render() {
         const position = [this.state.lat, this.state.lng];
 
@@ -36,7 +48,9 @@ class AvalancheMap extends Component {
         if (this.state.forecasts !== undefined) {
             for (var forecast of this.state.forecasts) {
                 if (forecast.region !== undefined) {
-                    map.push(<Polygon color="red" positions={forecast.region.coordinates} />);
+                    var dangerColor = this.getDangerColor(forecast.forecast);
+
+                    map.push(<Polygon color={dangerColor} positions={forecast.region.coordinates} />);
                 }
             }
 
