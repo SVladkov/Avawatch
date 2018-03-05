@@ -8,7 +8,9 @@ class App extends Component {
             <div className="App">
                 <header className="App-header">
                     <h1 className="App-title">Welcome to Avawatch</h1>
-                    <AvalancheMap />
+                    <div className="app-map-container">
+                        <AvalancheMap />
+                    </div>
                 </header>
             </div>
         );
