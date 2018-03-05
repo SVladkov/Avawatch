@@ -94,10 +94,26 @@ class dataAccess {
         return date.year + "-" + date.month + "-" + date.day;
     }
 
-    insertForecast(forecast) {
-        console.log(forecast)
+    updateExistingForecast(forecastId, newForecast) {
+        var updateExistingForecastQuery = "UPDATE forecasts SET " +
+            "forecast=" + newForecast +
+            " WHERE " +
+            "id=" + forecastId;
 
-        var insertForecast = "INSERT INTO forecasts (date, forecast, regionId, dataSourceId) VALUES (" +
+        console.log(updateExistingForecastQuery);
+
+        return new Promise((resolve, reject) => {this.db.connection.query(updateExistingForecastQuery, (err, result) => {
+                if (err) {
+                    throw err;
+                }
+
+                resolve(result);
+            });
+        });
+    }
+
+    insertNewForecast(forecast) {
+        var insertForecastQuery = "INSERT INTO forecasts (date, forecast, regionId, dataSourceId) VALUES (" +
             "'" + this.formatDate(forecast.date) + "', " +
             "'" + forecast.forecast + "', " +
             forecast.regionId + ", " +
@@ -105,12 +121,56 @@ class dataAccess {
         ")";
 
         return new Promise((resolve, reject) => {
-            this.db.connection.query(insertForecast, (err, result) => {
+            this.db.connection.query(insertForecastQuery, (err, result) => {
                 if (err) {
                     throw err;
                 } else {
                     resolve(result.insertId);
                 }
+            });
+        });
+    }
+
+    insertForecast(forecast) {
+        var findExistingForecast = "SELECT * FROM forecasts WHERE " +
+            "date='" + this.formatDate(forecast.date) + "' and " +
+            "regionId=" + forecast.regionId;
+
+        function findForecastWithSource(forecasts, dataSourceId) {
+            for (var forecast of forecasts) {
+                if (forecast.dataSourceId === dataSourceId) {
+                    return forecast;
+                }
+            }
+        }
+
+        return new Promise((resolve, reject) => {
+            this.db.connection.query(findExistingForecast, (err, existingForecasts) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (existingForecasts.length > 0) {
+                    var forecastWithSameSource = findForecastWithSource(existingForecasts, forecast.dataSourceId);
+
+                    if (forecastWithSameSource !== undefined) {
+                        if (forecastWithSameSource.forecast !== forecast.forecast) {
+                            this.updateExistingForecast(forecastWithSameSource.id, forecast.forecast).then(() => {
+                                resolve();
+                            });
+                        }
+                    } else {
+                        this.insertNewForecast(forecast).then(id => {
+                            resolve(id);
+                        });
+                    }
+                } else {
+                    this.insertNewForecast(forecast).then(id => {
+                        resolve(id);
+                    })
+                }
+
+                resolve();
             });
         });
     }

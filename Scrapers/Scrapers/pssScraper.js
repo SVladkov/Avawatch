@@ -45,10 +45,7 @@ class PssScraper extends BaseScraper {
                 var pirinDate = this.getDate(dates.eq(2).text());
                 var staraPlaninaDate = this.getDate(dates.eq(3).text());
 
-                console.log(vitoshaDate)
-
                 var danger = $('.aval_level');
-
                 var vitoshaDanger = danger.eq(0).attr('id').slice(-1);
                 var rillaDanger = danger.eq(1).attr('id').slice(-1);
                 var pirinDanger = danger.eq(2).attr('id').slice(-1);
