@@ -29,7 +29,7 @@ app.use('/forecasts', (req, res) => {
                     for (var forecast of forecasts) {
                         forecasts_of_regions.push({
                             date: forecast.date,
-                            forecast: forecast.forecast,
+                            dangerLevel: forecast.dangerLevel,
                             region: regions_json[forecast.regionId],
                             dataSourceId: forecast.dataSourceId
                         });

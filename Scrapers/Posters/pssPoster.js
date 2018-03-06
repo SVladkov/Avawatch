@@ -28,7 +28,7 @@ class PssPoster {
     postVitoshaForecast(forecast) {
         this.postForecast({ 
             date: forecast.date,
-            forecast: forecast.danger,
+            dangerLevel: parseInt(forecast.danger),
             regionId: 1
         });
     }
@@ -36,7 +36,7 @@ class PssPoster {
     postRillaForecast(forecast) {
         this.postForecast({
             date: forecast.date,
-            forecast: forecast.danger,
+            dangerLevel: parseInt(forecast.danger),
             regionId: 2
         });
     }
@@ -44,7 +44,7 @@ class PssPoster {
     postPirinForecast(forecast) {
         this.postForecast({
             date: forecast.date,
-            forecast: forecast.danger,
+            dangerLevel: parseInt(forecast.danger),
             regionId: 3
         });
     }
@@ -52,7 +52,7 @@ class PssPoster {
     postStaraPlaninaForecast(forecast) {
         this.postForecast({
             date: forecast.date,
-            forecast: forecast.danger,
+            dangerLevel: parseInt(forecast.danger),
             regionId: 4
         });
     }

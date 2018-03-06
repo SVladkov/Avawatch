@@ -42,19 +42,18 @@ class AvalancheMap extends Component {
     render() {
         const position = [this.state.lat, this.state.lng];
 
-        
-        var map = [];
+        var regions = [];
 
         if (this.state.forecasts !== undefined) {
+            console.log(this.state.forecasts)
+
             for (var forecast of this.state.forecasts) {
                 if (forecast.region !== undefined) {
-                    var dangerColor = this.getDangerColor(forecast.forecast);
+                    var dangerColor = this.getDangerColor(forecast.dangerLevel);
 
-                    map.push(<Polygon color={dangerColor} positions={forecast.region.coordinates} />);
+                    regions.push(<Polygon color={dangerColor} positions={forecast.region.coordinates} />);
                 }
             }
-
-            console.log(map);
 
             return (
                 <Map center={position} zoom={this.state.zoom}>
@@ -69,8 +68,7 @@ class AvalancheMap extends Component {
                             </span>
                         </Popup>
                     </Marker>
-                    <div>{map}</div>
-                        
+                    <div>{regions}</div>
                 </Map>
             )
         } else {
@@ -90,10 +88,6 @@ class AvalancheMap extends Component {
                 </Map>
             )
         }
-    
-
-        //var co = [[42.64, 23.21], [42.64, 23.26]]
-        //console.log(co)
     }
 }
 
