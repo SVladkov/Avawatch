@@ -39,6 +39,18 @@ class AvalancheMap extends Component {
         return codeToColor[dangerCode];
     }
 
+    getDangerText(dangerCode) {
+        const codeToText = {
+            '1': 'Low',
+            '2': 'Moderate',
+            '3': 'Considerable',
+            '4': 'High',
+            '5': 'Very high'
+        }
+
+        return codeToText[dangerCode];
+    }
+
     render() {
         const position = [this.state.lat, this.state.lng];
 
@@ -50,8 +62,18 @@ class AvalancheMap extends Component {
             for (var forecast of this.state.forecasts) {
                 if (forecast.region !== undefined) {
                     var dangerColor = this.getDangerColor(forecast.dangerLevel);
+                    var dangerText = this.getDangerText(forecast.dangerLevel);
 
-                    regions.push(<Polygon color={dangerColor} positions={forecast.region.coordinates} />);
+                    regions.push(<Polygon color={dangerColor} positions={forecast.region.coordinates} ><Popup>
+                            <span>
+                                Place: {forecast.region.name}
+                                <br />
+                                Danger: {dangerText}
+                                <br />
+                                Date: {forecast.date.slice(0, 10)}
+                            </span>
+                        </Popup></Polygon>
+                    );
                 }
             }
 
@@ -61,13 +83,6 @@ class AvalancheMap extends Component {
                         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={position}>
-                        <Popup>
-                            <span>
-                                A pretty CSS3 popup. <br /> Easily customizable.
-                            </span>
-                        </Popup>
-                    </Marker>
                     <div>{regions}</div>
                 </Map>
             )
@@ -78,13 +93,6 @@ class AvalancheMap extends Component {
                         attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    <Marker position={position}>
-                        <Popup>
-                            <span>
-                                A pretty CSS3 popup. <br /> Easily customizable.
-                            </span>
-                        </Popup>
-                    </Marker>                        
                 </Map>
             )
         }
