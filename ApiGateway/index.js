@@ -31,7 +31,8 @@ app.use('/forecasts', (req, res) => {
                             date: forecast.date,
                             dangerLevel: forecast.dangerLevel,
                             region: regions_json[forecast.regionId],
-                            dataSourceId: forecast.dataSourceId
+                            sourceName: forecast.sourceName,
+                            sourceUrl: forecast.sourceUrl
                         });
                     }
 

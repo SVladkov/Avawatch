@@ -57,8 +57,6 @@ class AvalancheMap extends Component {
         var regions = [];
 
         if (this.state.forecasts !== undefined) {
-            console.log(this.state.forecasts)
-
             for (var forecast of this.state.forecasts) {
                 if (forecast.region !== undefined) {
                     var dangerColor = this.getDangerColor(forecast.dangerLevel);
@@ -71,6 +69,8 @@ class AvalancheMap extends Component {
                                 Danger: {dangerText}
                                 <br />
                                 Date: {forecast.date.slice(0, 10)}
+                                <br />
+                                <a href={forecast.sourceUrl} target="_blank">{forecast.sourceUrl}</a>
                             </span>
                         </Popup></Polygon>
                     );

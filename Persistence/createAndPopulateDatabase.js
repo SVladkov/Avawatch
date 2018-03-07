@@ -7,9 +7,12 @@ connection = mysql.createConnection({
     database: 'AvawatchForecast'
 });
 
-createAllTables(connection);
-insertSourceTypes(connection);
-insertDataSources(connection);
+//createAllTables(connection);
+//insertSourceTypes(connection);
+//insertDataSources(connection);
+//insertRegions(connection);
+//insertRegions(connection);
+//insertRegions(connection);
 //insertRegions(connection);
 
 function createAllTables(connection) {
@@ -32,6 +35,7 @@ function createAllTables(connection) {
         var createDataSourcesTable = "CREATE TABLE dataSources (" +
             "id INT NOT NULL AUTO_INCREMENT, " +
             "name VARCHAR(127), " +
+            "url VARCHAR(127), " +
             "sourceTypeId INT NOT NULL, " +
             "PRIMARY KEY (id), " +
             "FOREIGN KEY (sourceTypeId) REFERENCES sourceTypes(id)" +
@@ -82,8 +86,9 @@ function insertSourceTypes(connection) {
 }
 
 function insertDataSources(connection) {
-    var insertForecast = "INSERT INTO dataSources (name, sourceTypeId) VALUES (" +
+    var insertForecast = "INSERT INTO dataSources (name, url, sourceTypeId) VALUES (" +
         "'PSS', " +
+        "'http://www.pss-bg.bg/avalanche/', " +
         "2" +
     ")";
 

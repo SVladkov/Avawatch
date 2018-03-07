@@ -9,7 +9,7 @@ class PssPoster {
     }
 
     postForecast(forecast) {
-        forecast.dataSourceId = 2;
+        forecast.dataSourceId = 1;
 
         fetch('http://localhost:3001/forecasts', {
             method: 'POST',
