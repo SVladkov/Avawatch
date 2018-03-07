@@ -1,18 +1,18 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors');
-
-const PERSISTENCE_HOST = 'http://localhost:3001';
-const REGIONS_HOST = 'http://localhost:3003';
+const bodyParser = require('body-parser');
+const configurations = require('./configurations');
 
 app = express();
 app.use(cors());
+app.use(bodyParser.json());
 
-app.use('/forecasts', (req, res) => {
-    fetch(PERSISTENCE_HOST + '/forecasts', {
+app.get('/forecasts', (req, res) => {
+    fetch(configurations.persistenceUrl, {
         method: 'GET'
     }).then(forecasts => {
-        fetch(REGIONS_HOST + '/regions', {
+        fetch(configurations.regionsUrl, {
             method: 'GET'
         }).then(regions => {
             forecasts.json().then(forecasts => {
@@ -41,7 +41,19 @@ app.use('/forecasts', (req, res) => {
             });
         });
     });
-})
+});
+
+app.post('/forecasts', (req, res) => {
+    fetch(configurations.persistenceUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+        },
+        body: JSON.stringify(req.body)
+    }).then((response) => {
+        res.send(response);
+    });
+});
 
 app.listen(3002);
 

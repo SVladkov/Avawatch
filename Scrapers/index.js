@@ -6,9 +6,9 @@ const CronJob = require('cron').CronJob;
 var pssScraper = new PssScraper();
 var pssPoster = new PssPoster();
 
-new CronJob('0 */3 * * * *', () => {
+//new CronJob('0 */3 * * * *', () => {
     pssScraper.scrape()
         .then(forecasts => {
             pssPoster.postForecasts(forecasts);
         });
-}, null, true);
+//}, null, true);
