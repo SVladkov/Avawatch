@@ -89,7 +89,16 @@ class dataAccess {
     }
 
     getAllForecasts() {
-        var getAllForecasts = "SELECT date, dangerLevel, regionId, name AS sourceName, url AS sourceUrl FROM forecasts JOIN dataSources";
+
+        var getAllForecasts = "SELECT date, dangerLevel, regionId, name AS sourceName, url AS sourceUrl " +
+            "FROM dataSources " +
+            "JOIN " +
+                "(SELECT * " +
+                "FROM forecasts as data " +
+                "WHERE date = " +
+                    "(SELECT MAX(date) " +
+                    "FROM forecasts " +
+                    "WHERE regionId=data.regionId)) as LatestDates;";
 
         return new Promise((resolve, reject) => {
             this.db.connection.query(getAllForecasts, (err, result) => {
